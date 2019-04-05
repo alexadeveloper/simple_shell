@@ -12,7 +12,8 @@ int main()
 	{
 		if (bytes > 0)
 		{
-			write(STDOUT_FILENO, lineptr, bytes);
+			if(bytes != 1 || lineptr[0] != '\n')
+				write(STDOUT_FILENO, lineptr, bytes);
 		}
 		else if (bytes < 0)
 		{
