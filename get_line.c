@@ -13,13 +13,13 @@ int main()
 		if (bytes > 0)
 		{
 			write(STDOUT_FILENO, lineptr, bytes);
-			write(1, prompt, 12);
 		}
 		else if (bytes < 0)
 		{
 			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
 			exit(1);
 		}
+		write(1, prompt, 12);
 	}
 	return (0);
 }
