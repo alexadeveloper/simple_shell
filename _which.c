@@ -57,6 +57,7 @@ int main(int ac, char **av, char **envp)
 				if (stat(full_path, &st) == 0)
 				{
 					printf(" FOUND in %s\n", full_path);
+					free(full_path);
 					break;
 				}
 				free(full_path);
