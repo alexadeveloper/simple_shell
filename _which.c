@@ -4,7 +4,9 @@ char *get_value_env(char **envp, char *value);
 char *str_concat(char *s1, char *s2);
 /**
  * main - stat example
- *
+ * @ac: arguments count
+ * @av: arguments values
+ * @envp: enviroment variables
  * Return: Always 0.
  */
 int main(int ac, char **av, char **envp)
@@ -23,7 +25,7 @@ int main(int ac, char **av, char **envp)
 	{
 		printf("%s:", av[i]);
 
-		if (av[i][0] == '/' )
+		if (av[i][0] == '/')
 		{
 			if (stat(av[i], &st) == 0)
 			{
@@ -37,7 +39,7 @@ int main(int ac, char **av, char **envp)
 		else
 		{
 			token = strtok(get_value_env(envp, "PATH"), s);
-			while( token != NULL )
+			while (token != NULL)
 			{
 				path = str_concat(token, "/");
 				if (path == NULL)
@@ -45,7 +47,7 @@ int main(int ac, char **av, char **envp)
 					printf("ERRRORR en concat\n");
 					return (-1);
 				}
-				full_path = str_concat(path,av[i]);
+				full_path = str_concat(path, av[i]);
 				free(path);
 				if (full_path == NULL)
 				{
@@ -60,7 +62,7 @@ int main(int ac, char **av, char **envp)
 				free(full_path);
 				token = strtok(NULL, s);
 			}
-			if(token == NULL)
+			if (token == NULL)
 			{
 				printf(" NOT FOUND\n");
 			}
@@ -80,16 +82,17 @@ char *get_value_env(char **envp, char *variable)
 {
 	unsigned int envp_i = 0, variable_i = 0;
 	char flag;
+
 	while (envp[envp_i])
 	{
-		flag= 1;
+		flag = 1;
 		while (variable[variable_i] && flag)
 		{
 			if (envp[envp_i][variable_i] != variable[variable_i])
 				flag = 0;
 			variable_i++;
 		}
-		if(flag)
+		if (flag)
 		{
 			envp[envp_i] = &envp[envp_i][variable_i + 1];
 			return (envp[envp_i]);
