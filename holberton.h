@@ -6,4 +6,5 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+extern char **environ;
 #endif
