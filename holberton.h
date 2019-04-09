@@ -9,4 +9,6 @@
 #include <string.h>
 #include <sys/wait.h>
 extern char **environ;
+int myexec(char *exec_path, char *args[],char *env_args[]);
+char *str_concat(char *s1, char *s2);
 #endif
