@@ -8,4 +8,5 @@
 #include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
+extern char **environ;
 #endif
