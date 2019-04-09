@@ -10,4 +10,6 @@
 #include <sys/wait.h>
 extern char **environ;
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+int _fgtec(FILE *stream);
+char *_fgets(char *dst, int max, FILE *stream);
 #endif
