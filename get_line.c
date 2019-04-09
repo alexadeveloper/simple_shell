@@ -8,7 +8,7 @@ int main()
 	char *prompt = "$jessiFer> ";
 
 	write(1, prompt, 12);
-	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
+	while ((bytes =_getline(&lineptr, &n, stdin)) != -1)
 	{
 		if (bytes > 0)
 		{
