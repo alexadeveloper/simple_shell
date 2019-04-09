@@ -1,4 +1,5 @@
 #include "holberton.h"
+char** build_argv(char *lineptr);
 /**
  * main - Entry point of shell
  * @ac: argument counter
@@ -11,21 +12,21 @@ int main(int ac, char *argv[], char *envp[])
 	char *lineptr = NULL;
 	size_t n = 0;
 	ssize_t bytes;
-	char *prompt = "$jessiFer> ";
+	char *prompt = "$jessiFer> ", **myargv;
 
 	write(1, prompt, 12);
 	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
 	{
 		if (bytes > 0)
 		{
-			lineptr = strtok(lineptr, " \n");
-			while (lineptr != NULL)
+			myargv = build_argv(lineptr);
+			if(myargv && myargv[0] != NULL)
 			{
-				printf("%s\n", lineptr);
-				lineptr = strtok(NULL, " ");
-
+				myexec(myargv[0], myargv, envp);
+				free(myargv);
+//				free(lineptr);
+				myargv = NULL;
 			}
-			write(STDOUT_FILENO, lineptr, bytes);
 		}
 		else if (bytes < 0)
 		{
@@ -167,4 +168,52 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	}
 	free(ptr);
 	return (p);
+}
+
+void *_realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
+{
+	char **p, **ptr1 = ptr;
+	unsigned int iterator = 0;
+
+	if (new_size == old_size)
+		return (ptr);
+	if (new_size == 0 && ptr != NULL)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	p = malloc(new_size * sizeof(char*));
+	if (p == NULL)
+	{
+		free(p);
+		return (NULL);
+	}
+	while (iterator < new_size - 1)
+	{
+		p[iterator] = ptr1[iterator];
+		iterator++;
+	}
+	free(ptr);
+	return (p);
+}
+
+char** build_argv(char *lineptr)
+{
+/*
+  hacer free cuando no se pueda hacer realloc hacer free
+*/
+	char **argv= NULL;
+	char len = 1;
+
+	lineptr = strtok(lineptr, " \n");
+	while (lineptr != NULL)
+	{
+		argv = _realloc_pointer(argv, len - 1, len);
+		argv[len - 1] = lineptr;
+		lineptr = strtok(NULL, " \n");
+		len++;
+	}
+	argv = _realloc_pointer(argv, len - 1, len);
+	argv[len - 1] = NULL;
+	return (argv);
 }
