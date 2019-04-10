@@ -16,7 +16,7 @@ int main(int ac, char *argv[], char *envp[])
 	int bytes_path;
 
 	write(1, prompt, 12);
-	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
+	while ((bytes = _getline(&lineptr, &n, 0)) != -1)
 	{
 		if (bytes > 0)
 		{
