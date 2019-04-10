@@ -15,10 +15,11 @@ int main(int ac, char *argv[], char *envp[])
 	char *prompt = "$jessiFer> ", **myargv;
 	int bytes_path;
 
+
 	interactive = isatty(STDIN_FILENO);
 	if(interactive)
 		write(1, prompt, 12);
-	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
+	while ((bytes = _getline(&lineptr, &n, 0)) != -1)
 	{
 		if (bytes > 0)
 		{

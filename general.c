@@ -30,3 +30,53 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	_strcpy(*lineptr, line);
 return (len);
 }
+char *_strtok(char *ptr, const char *delim)
+{
+	static char    *t;
+	char *r;
+	int n;
+
+	if (ptr)
+		t = ptr;
+
+	r = t + _strspn(t, delim);
+	n = _strcspn(r, delim);
+	if (!n)
+		return (0);
+	t = r + n;
+	if (*t)
+		*t++ = 0;
+	return (r);
+}
+int _strspn(const char *p, const char *s)
+{
+	int i, j;
+
+	for (i = 0; p[i]; i++)
+	{
+		for (j = 0; s[j]; j++)
+		{
+			if (s[j] == p[i])
+				break;
+		}
+		if (!s[j])
+			break;
+	}
+	return (i);
+}
+int _strcspn(const char *p, const char *s)
+{
+	int i, j;
+
+	for (i = 0; p[i]; i++)
+	{
+		for (j = 0; s[j]; j++)
+		{
+			if (s[j] == p[i])
+				break;
+		}
+		if (s[j])
+			break;
+	}
+	return (i);
+}
