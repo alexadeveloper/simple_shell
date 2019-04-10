@@ -1,5 +1,5 @@
 #include "holberton.h"
-char** build_argv(char *lineptr);
+int build_path(char **full_path, char *argv_0, char *envp[]);
 /**
  * main - Entry point of shell
  * @ac: argument counter
@@ -9,10 +9,11 @@ char** build_argv(char *lineptr);
  */
 int main(int ac, char *argv[], char *envp[])
 {
-	char *lineptr = NULL;
+	char *lineptr = NULL, *full_path = NULL;
 	size_t n = 0;
 	ssize_t bytes;
 	char *prompt = "$jessiFer> ", **myargv;
+	int bytes_path;
 
 	write(1, prompt, 12);
 	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
@@ -22,10 +23,16 @@ int main(int ac, char *argv[], char *envp[])
 			myargv = build_argv(lineptr);
 			if(myargv && myargv[0] != NULL)
 			{
-				myexec(myargv[0], myargv, envp);
-				free(myargv);
+				bytes_path = build_path(&full_path,myargv[0], envp);
+				myexec(full_path, myargv, envp);
+				if (bytes_path > 0)
+				{
+					free(full_path);
+				}
+//				free(myargv);
 //				free(lineptr);
 				myargv = NULL;
+				full_path = NULL;
 			}
 		}
 		else if (bytes < 0)
@@ -127,8 +134,7 @@ char *get_value_env(char **envp, char *variable)
 		}
 		if (flag)
 		{
-			envp[envp_i] = &envp[envp_i][variable_i + 1];
-			return (envp[envp_i]);
+			return (&envp[envp_i][variable_i + 1]);
 		}
 		variable_i = 0;
 		envp_i++;
@@ -196,7 +202,11 @@ void *_realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
 	free(ptr);
 	return (p);
 }
-
+/**
+ * build_argv - Build argv to send myexec
+ * @lineptr: Line with value stored the information
+ * Return: Array to pointers with Arguments
+ */
 char** build_argv(char *lineptr)
 {
 /*
@@ -216,4 +226,57 @@ char** build_argv(char *lineptr)
 	argv = _realloc_pointer(argv, len - 1, len);
 	argv[len - 1] = NULL;
 	return (argv);
+}
+/**
+ * build_path - fin path to execute
+ * @path: comand to execute
+ * Return: Pointer with the value of full path
+ */
+int build_path(char **full_path, char *argv_0, char *envp[])
+{
+	char *token = NULL, *s = ":", *path = NULL ;
+	struct stat st;
+
+	if (argv_0[0] == '/')
+	{
+		if (stat(argv_0, &st) == 0)
+		{
+			*full_path = argv_0;
+			return (0);
+		}
+		else
+		{
+			return (-1);
+		}
+	}
+	else
+	{
+		token = strtok(str_concat(get_value_env(envp, "PATH"), ""), s);
+/*
+  pendiente la liberacion del  str_concat(get_value_env(envp, "PATH"), "") use free
+*/
+		while (token != NULL)
+		{
+			path = str_concat(token, "/");
+			if (path == NULL)
+			{
+				printf("ERRRORR en concat\n");
+				return (-1);
+			}
+			*full_path = str_concat(path, argv_0);
+			free(path);
+			if (*full_path == NULL)
+			{
+				printf("ERRRORR en concat\n");
+				return (-1);
+			}
+			if (stat(*full_path, &st) == 0)
+			{
+				return (1);
+			}
+			free(*full_path);
+			token = strtok(NULL, s);
+		}
+		return(-1);
+	}
 }
