@@ -9,13 +9,15 @@ int build_path(char **full_path, char *argv_0, char *envp[]);
  */
 int main(int ac, char *argv[], char *envp[])
 {
-	char *lineptr = NULL, *full_path = NULL;
+	char *lineptr = NULL, *full_path = NULL, interactive;
 	size_t n = 0;
 	ssize_t bytes;
 	char *prompt = "$jessiFer> ", **myargv;
 	int bytes_path;
 
-	write(1, prompt, 12);
+	interactive = isatty(STDIN_FILENO);
+	if(interactive)
+		write(1, prompt, 12);
 	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
 	{
 		if (bytes > 0)
@@ -40,7 +42,8 @@ int main(int ac, char *argv[], char *envp[])
 			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
 			exit(1);
 		}
-		write(1, prompt, 12);
+		if(interactive)
+			write(1, prompt, 12);
 	}
 	return (0);
 }
