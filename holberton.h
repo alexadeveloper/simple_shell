@@ -17,4 +17,7 @@ char** build_argv(char *lineptr);
 char *_strcpy(char *dest, char *src);
 int _strlen(char *s);
 ssize_t _getline(char **lineptr, size_t *n, int fd);
+char *_strtok(char *ptr, const char *delim);
+int _strspn(const char *p, const char *s);
+int _strcspn(const char *p, const char *s);
 #endif
