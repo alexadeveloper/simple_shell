@@ -71,7 +71,7 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 		if (execve(exec_path, args, env_args) == -1)
 		{
 			write(STDOUT_FILENO, "Error execv\n", 12);
-			return (-1);
+			exit (-1);
 		}
 	}
 	else
