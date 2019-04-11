@@ -21,7 +21,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	len = _strlen(line);
 	if ((len + 1) < i)
 	{
-		if(line[0] == 0)
+		if (line[0] == 0)
 		{
 			return (-1);
 		}
@@ -43,8 +43,8 @@ char *_strtok(char *ptr, const char *delim)
 	if (ptr)
 		t = ptr;
 
-	r = t + _strspn(t, delim);
-	n = _strcspn(r, delim);
+	r = t + _strspn(t, delim, 1);
+	n = _strspn(r, delim, 2);
 	if (!n)
 		return (0);
 	t = r + n;
@@ -52,7 +52,7 @@ char *_strtok(char *ptr, const char *delim)
 		*t++ = 0;
 	return (r);
 }
-int _strspn(const char *p, const char *s)
+int _strspn(const char *p, const char *s, int opt)
 {
 	int i, j;
 
@@ -63,24 +63,51 @@ int _strspn(const char *p, const char *s)
 			if (s[j] == p[i])
 				break;
 		}
-		if (!s[j])
-			break;
+		if (opt == 1)
+		{
+			if (!s[j])
+				break;
+		}
+		if (opt == 2)
+		{
+			if (s[j])
+				break;
+		}
 	}
 	return (i);
 }
-int _strcspn(const char *p, const char *s)
+/**
+ * str_concat - Duplicate string
+ * @s1: string one
+ * @s2: string two
+ * Return: pointer to copy array
+ */
+char *str_concat(char *s1, char *s2)
 {
-	int i, j;
+	char *p;
+	unsigned int i;
+	unsigned int size_s1, size_s2;
 
-	for (i = 0; p[i]; i++)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	for (size_s1 = 0; *(s1 + size_s1) && s1; size_s1++)
 	{
-		for (j = 0; s[j]; j++)
-		{
-			if (s[j] == p[i])
-				break;
-		}
-		if (s[j])
-			break;
 	}
-	return (i);
+	for (size_s2 = 0; *(s2 + size_s2) && s2; size_s2++)
+	{
+	}
+	p =  malloc(sizeof(char) * (size_s1 + size_s2 + 1));
+	if (p == NULL)
+		return (NULL);
+	for (i = 0; i < size_s1 + size_s2; i++)
+	{
+		if (i < size_s1)
+			p[i] = *(s1 + i);
+		else
+			p[i] = *(s2 + i - size_s1);
+	}
+	p[i] = '\0';
+	return (p);
 }
