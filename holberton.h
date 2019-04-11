@@ -8,6 +8,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <sys/wait.h>
+#include <signal.h>
 extern char **environ;
 int myexec(char *exec_path, char *args[],char *env_args[]);
 char *str_concat(char *s1, char *s2);
@@ -20,4 +21,6 @@ ssize_t _getline(char **lineptr, size_t *n, int fd);
 char *_strtok(char *ptr, const char *delim);
 int _strspn(const char *p, const char *s);
 int _strcspn(const char *p, const char *s);
+void sighandler(int);
+int build_path(char **full_path, char *argv_0, char *envp[]);
 #endif

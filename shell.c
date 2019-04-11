@@ -1,5 +1,4 @@
 #include "holberton.h"
-int build_path(char **full_path, char *argv_0, char *envp[]);
 /**
  * main - Entry point of shell
  * @ac: argument counter
@@ -18,8 +17,12 @@ int main(int ac, char *argv[], char *envp[])
 
 	interactive = isatty(STDIN_FILENO);
 	if(interactive)
+	{
 		write(1, prompt, 12);
-	while ((bytes = _getline(&lineptr, &n, 0)) != -1)
+		signal(SIGINT, sighandler);
+		signal(EOF, sighandler);
+	}
+	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
 	{
 		if (bytes > 0)
 		{
@@ -32,10 +35,6 @@ int main(int ac, char *argv[], char *envp[])
 				{
 					free(full_path);
 				}
-//				free(myargv);
-//				free(lineptr);
-				myargv = NULL;
-				full_path = NULL;
 			}
 		}
 		else if (bytes < 0)
@@ -43,8 +42,20 @@ int main(int ac, char *argv[], char *envp[])
 			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
 			exit(1);
 		}
+		else
+		{
+			free(lineptr);
+			free(full_path);
+			printf("%d\n", EOF);
+			exit(0);
+		}
 		if(interactive)
 			write(1, prompt, 12);
+//		free(lineptr);
+//		free(myargv);
+		myargv = NULL;
+		full_path = NULL;
+
 	}
 	return (0);
 }
@@ -238,7 +249,7 @@ char** build_argv(char *lineptr)
  */
 int build_path(char **full_path, char *argv_0, char *envp[])
 {
-	char *token = NULL, *s = ":", *path = NULL ;
+	char *token = NULL, *s = ":", *path = NULL, *aux;
 	struct stat st;
 
 	if (argv_0[0] == '/')
@@ -255,15 +266,14 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 	}
 	else
 	{
-		token = strtok(str_concat(get_value_env(envp, "PATH"), ""), s);
-/*
-  pendiente la liberacion del  str_concat(get_value_env(envp, "PATH"), "") use free
-*/
+		aux = str_concat(get_value_env(envp, "PATH"), "");
+		token = strtok(aux, s);
 		while (token != NULL)
 		{
 			path = str_concat(token, "/");
 			if (path == NULL)
 			{
+				free(aux);
 				printf("ERRRORR en concat\n");
 				return (-1);
 			}
@@ -271,16 +281,27 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 			free(path);
 			if (*full_path == NULL)
 			{
+				free(aux);
 				printf("ERRRORR en concat\n");
 				return (-1);
 			}
 			if (stat(*full_path, &st) == 0)
 			{
+				free(aux);
 				return (1);
 			}
 			free(*full_path);
 			token = strtok(NULL, s);
 		}
+		free(aux);
 		return(-1);
 	}
+}
+/**
+ * sighandler - Function handle the signals
+ * @signum: signal num
+ */
+void sighandler(int signum)
+{
+	;
 }
