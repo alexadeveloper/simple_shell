@@ -123,33 +123,6 @@ char *get_value_env(char **envp, char *variable)
 	}
 	return (NULL);
 }
-
-void *_realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
-{
-	char **p, **ptr1 = ptr;
-	unsigned int iterator = 0;
-
-	if (new_size == old_size)
-		return (ptr);
-	if (new_size == 0 && ptr != NULL)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	p = malloc(new_size * sizeof(char*));
-	if (p == NULL)
-	{
-		free(p);
-		return (NULL);
-	}
-	while (iterator < new_size - 1)
-	{
-		p[iterator] = ptr1[iterator];
-		iterator++;
-	}
-	free(ptr);
-	return (p);
-}
 /**
  * build_argv - Build argv to send myexec
  * @lineptr: Line with value stored the information
