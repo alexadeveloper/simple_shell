@@ -89,3 +89,32 @@ int _strspn(const char *p, const char *s, int opt)
 	}
 	return (i);
 }
+/**
+ *get_value_env - find the value of enviroment variable
+ *@envp: enviroment variables
+ *@variable: variable to search
+ *Return: pointer start on value of variable
+*/
+char *get_value_env(char **envp, char *variable)
+{
+	unsigned int envp_i = 0, variable_i = 0;
+	char flag;
+
+	while (envp[envp_i])
+	{
+		flag = 1;
+		while (variable[variable_i] && flag)
+		{
+			if (envp[envp_i][variable_i] != variable[variable_i])
+				flag = 0;
+			variable_i++;
+		}
+		if (flag)
+		{
+			return (&envp[envp_i][variable_i + 1]);
+		}
+		variable_i = 0;
+		envp_i++;
+	}
+	return (NULL);
+}
