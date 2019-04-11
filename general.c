@@ -118,3 +118,37 @@ char *get_value_env(char **envp, char *variable)
 	}
 	return (NULL);
 }
+/**
+ *myexec - Execute program
+ *@exec_path: path to execute program
+ *@args: arguments to execute
+ *@env_args: enviroment variables
+ *Return: retu if was successful or not
+*/
+int myexec(char *exec_path, char *args[], char *env_args[])
+{
+	pid_t pid;
+	int wstatus = 0;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		write(STDOUT_FILENO, "Error process\n", 14);
+		return (-1);
+	}
+	else if (pid == 0)
+	{
+		if (execve(exec_path, args, env_args) == -1)
+		{
+			/*free(exec_path);*/
+			free(args);
+			write(STDOUT_FILENO, "Error execv\n", 12);
+			exit(-1);
+		}
+	}
+	else
+	{
+		waitpid(pid, &wstatus, 0);
+	}
+	return (0);
+}
