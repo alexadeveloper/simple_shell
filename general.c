@@ -34,6 +34,12 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	_strcpy(*lineptr, line);
 	return (len);
 }
+/**
+  *_strtok - extract tokens from strings
+  *@ptr: the string
+  *@delim: delimitador
+  *Return: a pointer to the next token
+ */
 char *_strtok(char *ptr, const char *delim)
 {
 	static char    *t;
@@ -52,6 +58,13 @@ char *_strtok(char *ptr, const char *delim)
 		*t++ = 0;
 	return (r);
 }
+/**
+  *_strspn - find some char into a string
+  *@p: the string to be scanned
+  *@s: the characters to match in p
+  *@opt: the option
+  *Return: the number of characters in the initial segment of p
+ */
 int _strspn(const char *p, const char *s, int opt)
 {
 	int i, j;
