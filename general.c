@@ -34,6 +34,12 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	_strcpy(*lineptr, line);
 	return (len);
 }
+/**
+  *_strtok - extract tokens from strings
+  *@ptr: the string
+  *@delim: delimitador
+  *Return: a pointer to the next token
+ */
 char *_strtok(char *ptr, const char *delim)
 {
 	static char    *t;
@@ -52,6 +58,13 @@ char *_strtok(char *ptr, const char *delim)
 		*t++ = 0;
 	return (r);
 }
+/**
+  *_strspn - find some char into a string
+  *@p: the string to be scanned
+  *@s: the characters to match in p
+  *@opt: the option
+  *Return: the number of characters in the initial segment of p
+ */
 int _strspn(const char *p, const char *s, int opt)
 {
 	int i, j;
@@ -77,37 +90,65 @@ int _strspn(const char *p, const char *s, int opt)
 	return (i);
 }
 /**
- * str_concat - Duplicate string
- * @s1: string one
- * @s2: string two
- * Return: pointer to copy array
- */
-char *str_concat(char *s1, char *s2)
+ *get_value_env - find the value of enviroment variable
+ *@envp: enviroment variables
+ *@variable: variable to search
+ *Return: pointer start on value of variable
+*/
+char *get_value_env(char **envp, char *variable)
 {
-	char *p;
-	unsigned int i;
-	unsigned int size_s1, size_s2;
+	unsigned int envp_i = 0, variable_i = 0;
+	char flag;
 
-	if (s1 == NULL)
-		s1 = "";
-	if (s2 == NULL)
-		s2 = "";
-	for (size_s1 = 0; *(s1 + size_s1) && s1; size_s1++)
+	while (envp[envp_i])
 	{
+		flag = 1;
+		while (variable[variable_i] && flag)
+		{
+			if (envp[envp_i][variable_i] != variable[variable_i])
+				flag = 0;
+			variable_i++;
+		}
+		if (flag)
+		{
+			return (&envp[envp_i][variable_i + 1]);
+		}
+		variable_i = 0;
+		envp_i++;
 	}
-	for (size_s2 = 0; *(s2 + size_s2) && s2; size_s2++)
+	return (NULL);
+}
+/**
+ *myexec - Execute program
+ *@exec_path: path to execute program
+ *@args: arguments to execute
+ *@env_args: enviroment variables
+ *Return: retu if was successful or not
+*/
+int myexec(char *exec_path, char *args[], char *env_args[])
+{
+	pid_t pid;
+	int wstatus = 0;
+
+	pid = fork();
+	if (pid == -1)
 	{
+		write(STDOUT_FILENO, "Error process\n", 14);
+		return (-1);
 	}
-	p =  malloc(sizeof(char) * (size_s1 + size_s2 + 1));
-	if (p == NULL)
-		return (NULL);
-	for (i = 0; i < size_s1 + size_s2; i++)
+	else if (pid == 0)
 	{
-		if (i < size_s1)
-			p[i] = *(s1 + i);
-		else
-			p[i] = *(s2 + i - size_s1);
+		if (execve(exec_path, args, env_args) == -1)
+		{
+			/*free(exec_path);*/
+			free(args);
+			write(STDOUT_FILENO, "Error execv\n", 12);
+			exit(-1);
+		}
 	}
-	p[i] = '\0';
-	return (p);
+	else
+	{
+		waitpid(pid, &wstatus, 0);
+	}
+	return (0);
 }
