@@ -123,11 +123,3 @@ char *get_value_env(char **envp, char *variable)
 	}
 	return (NULL);
 }
-/**
- * sighandler - Function handle the signals
- * @signum: signal num
- */
-void sighandler(int signum)
-{
-        printf("signal caputed: %d\n", signum);
-}
