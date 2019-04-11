@@ -22,7 +22,7 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	p = malloc(new_size);
 	if (p == NULL)
 	{
-		free(p);
+		free(ptr);
 		return (NULL);
 	}
 	while (iterator < new_size - 1)
@@ -55,7 +55,7 @@ void *_realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
 	p = malloc(new_size * sizeof(char *));
 	if (p == NULL)
 	{
-		free(p);
+		free(ptr);
 		return (NULL);
 	}
 	while (iterator < new_size - 1)
