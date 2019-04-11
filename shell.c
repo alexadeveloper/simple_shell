@@ -34,13 +34,13 @@ int main(int ac, char *argv[], char *envp[])
 			}
 		}
 		else if (bytes < 0)
-		{	
+		{
 			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
 			exit(1);
 		}
 		else if (bytes == 0)
 		{
-			write(STDOUT_FILENO, "blah\n",5);
+			write(STDOUT_FILENO, "blah\n", 5);
 			free(lineptr);
 			free(full_path);
 		}

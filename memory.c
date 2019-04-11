@@ -34,13 +34,13 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	return (p);
 }
 /**
-  *_realloc_pointer -  reallocates a memory block
+  *realloc_pointer -  reallocates a memory block
   *@ptr: is a pointer to the memory previously allocated
   *@old_size: is the size, in bytes, of the allocated space for ptr
   *@new_size: is the new size, in bytes of the new memory block
   *Return: pointer to the new allocation with the values from prev
  */
-void *_realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
+void *realloc_pointer(void *ptr, unsigned int old_size, unsigned int new_size)
 {
 	char **p, **ptr1 = ptr;
 	unsigned int iterator = 0;
