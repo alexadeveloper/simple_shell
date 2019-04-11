@@ -8,9 +8,9 @@
  */
 ssize_t _getline(char **lineptr, size_t *n, int fd)
 {
-	static char line[1024];
-	char *ptr;
-	unsigned int len;
+	char line[1024] = {0};
+	char *ptr = NULL;
+	unsigned int len = 0;
 	unsigned int i = 1024;
 
 	if (lineptr == NULL || n == NULL)
@@ -21,14 +21,18 @@ ssize_t _getline(char **lineptr, size_t *n, int fd)
 	len = _strlen(line);
 	if ((len + 1) < i)
 	{
-		ptr = realloc(*lineptr, i);
+		if(line[0] == 0)
+		{
+			return (-1);
+		}
+		ptr = malloc(sizeof(char) * len);
 		if (ptr == NULL)
 			return (-1);
 		*lineptr = ptr;
 		*n = i;
 	}
 	_strcpy(*lineptr, line);
-return (len);
+	return (len);
 }
 char *_strtok(char *ptr, const char *delim)
 {
