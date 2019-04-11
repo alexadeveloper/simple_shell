@@ -22,7 +22,7 @@ int main(int ac, char *argv[], char *envp[])
 		signal(SIGINT, sighandler);
 		signal(EOF, sighandler);
 	}
-	while ((bytes = getline(&lineptr, &n, stdin)) != -1)
+	while ((bytes = _getline(&lineptr, &n, 0)))
 	{
 		if (bytes > 0)
 		{
@@ -34,6 +34,7 @@ int main(int ac, char *argv[], char *envp[])
 				if (bytes_path > 0)
 				{
 					free(full_path);
+					free(myargv);
 				}
 			}
 		}
@@ -42,17 +43,16 @@ int main(int ac, char *argv[], char *envp[])
 			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
 			exit(1);
 		}
-		else
+		else if (bytes == 0)
 		{
+			write(STDOUT_FILENO, "blah\n",5);
 			free(lineptr);
 			free(full_path);
-			printf("%d\n", EOF);
-			exit(0);
 		}
 		if(interactive)
 			write(1, prompt, 12);
-//		free(lineptr);
-//		free(myargv);
+	       	free(lineptr);
+		lineptr = NULL;
 		myargv = NULL;
 		full_path = NULL;
 
@@ -81,6 +81,8 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 	{
 		if (execve(exec_path, args, env_args) == -1)
 		{
+//			free(exec_path);
+			free(args);
 			write(STDOUT_FILENO, "Error execv\n", 12);
 			exit (-1);
 		}
@@ -303,5 +305,5 @@ int build_path(char **full_path, char *argv_0, char *envp[])
  */
 void sighandler(int signum)
 {
-	;
+        printf("signal caputed: %d\n", signum);
 }
