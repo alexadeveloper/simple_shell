@@ -140,7 +140,6 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 	{
 		if (execve(exec_path, args, env_args) == -1)
 		{
-			/*free(exec_path);*/
 			free(args);
 			write(STDOUT_FILENO, "Error execv\n", 12);
 			exit(-1);

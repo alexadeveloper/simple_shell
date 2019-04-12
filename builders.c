@@ -10,15 +10,15 @@ char **build_argv(char *lineptr)
 	char **argv = NULL;
 	char len = 1;
 
-	lineptr = strtok(lineptr, " \n");
+	lineptr = strtok(lineptr, " \t\n");
 	while (lineptr != NULL)
 	{
-		argv = _realloc_pointer(argv, len - 1, len);
+		argv = realloc_pointer(argv, len - 1, len);
 		argv[len - 1] = lineptr;
-		lineptr = strtok(NULL, " \n");
+		lineptr = strtok(NULL, " \t\n");
 		len++;
 	}
-	argv = _realloc_pointer(argv, len - 1, len);
+	argv = realloc_pointer(argv, len - 1, len);
 	argv[len - 1] = NULL;
 	return (argv);
 }
