@@ -31,7 +31,7 @@ char **build_argv(char *lineptr)
  *@envp: the enviroment
  *Return: Pointer with the value of full path
 */
-int build_path(char **full_path, char *argv_0, char *envp[])
+int build_path(int c, char **full_path, char *argv_0, char *envp[])
 {
 	char *token = NULL, *s = ":", *path = NULL, *aux;
 	struct stat st;
@@ -45,8 +45,7 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 		}
 		else{
 			*full_path = str_concat("","");
-			write(STDOUT_FILENO, argv_0, _strlen(argv_0));
-			write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
+			not_found_command(c, argv_0);
 			return (-1);
 		}
 	}
@@ -81,8 +80,7 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 		}
 		free(aux);
 		*full_path = str_concat("","");
-		write(STDOUT_FILENO, argv_0, _strlen(argv_0));
-		write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
+		not_found_command(c, argv_0);
 		return (-1);
 	}
 }
