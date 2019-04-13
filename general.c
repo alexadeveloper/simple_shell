@@ -149,5 +149,5 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 	{
 		waitpid(pid, &wstatus, 0);
 	}
-	return (0);
+	return (wstatus);
 }

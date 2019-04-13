@@ -19,6 +19,8 @@ char **build_argv(char *lineptr)
 		len++;
 	}
 	argv = realloc_pointer(argv, len - 1, len);
+	if(argv == NULL)
+		return(NULL);
 	argv[len - 1] = NULL;
 	return (argv);
 }
@@ -38,7 +40,7 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 	{
 		if (stat(argv_0, &st) == 0)
 		{
-			*full_path = argv_0;
+			*full_path = str_concat("",argv_0);
 			return (0);
 		}
 		else
@@ -52,18 +54,24 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 		{
 			path = str_concat(token, "/");
 			if (path == NULL)
-			{ free(aux);
+			{
+				free(aux);
 				printf("ERRRORR en concat\n");
-				return (-1); }
+				return (-1);
+			}
 			*full_path = str_concat(path, argv_0);
 			free(path);
 			if (*full_path == NULL)
-			{ free(aux);
+			{
+				free(aux);
 				printf("ERRRORR en concat\n");
-				return (-1); }
+				return (-1);
+			}
 			if (stat(*full_path, &st) == 0)
-			{ free(aux);
-				return (1); }
+			{
+				free(aux);
+				return (1);
+			}
 			free(*full_path);
 			token = strtok(NULL, s);
 		}

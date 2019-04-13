@@ -19,7 +19,7 @@ int main(int ac, char *argv[], char *envp[])
 	{	write(1, prompt, 12);
 		signal(SIGINT, sighandler);
 		signal(EOF, sighandler); }
-	while ((bytes = _getline(&lineptr, &n, 0)))
+	while ((bytes = getline(&lineptr, &n, stdin)))
 	{
 		if (bytes > 0)
 		{
@@ -30,14 +30,16 @@ int main(int ac, char *argv[], char *envp[])
 				myexec(full_path, myargv, envp);
 				if (bytes_path > 0)
 				{
-					free(myargv);
+					free(full_path);
+
 				}
-				free(full_path);
 			}
+			free(myargv);
 		}
 		else if (bytes < 0)
 		{
-			write(STDOUT_FILENO, "Error\n", sizeof("Error\n"));
+			free(lineptr);
+//			write(STDOUT_FILENO, "ctrl +D\n", sizeof("Error\n"));
 			exit(1);
 		}
 		else if (bytes == 0)
