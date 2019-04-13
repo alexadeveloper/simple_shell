@@ -44,9 +44,9 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 			return (0);
 		}
 		else{
+			*full_path = str_concat("","");
 			write(STDOUT_FILENO, argv_0, _strlen(argv_0));
 			write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
-
 			return (-1);
 		}
 	}
