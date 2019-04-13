@@ -120,12 +120,13 @@ char *get_value_env(char **envp, char *variable)
 }
 /**
  *myexec - Execute program
+ *@line_ptr: current line
  *@exec_path: path to execute program
  *@args: arguments to execute
  *@env_args: enviroment variables
  *Return: retu if was successful or not
 */
-int myexec(char *exec_path, char *args[], char *env_args[])
+int myexec(char *line_ptr, char *exec_path, char *args[], char *env_args[])
 {
 	pid_t pid;
 	int wstatus = 0;
@@ -140,9 +141,11 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 	{
 		if (execve(exec_path, args, env_args) == -1)
 		{
-			/*free(exec_path);*/
+			if (exec_path[0])
+				perror(args[0]);
 			free(args);
-			write(STDOUT_FILENO, "Error execv\n", 12);
+			free(exec_path);
+			free(line_ptr);
 			exit(-1);
 		}
 	}
@@ -150,5 +153,5 @@ int myexec(char *exec_path, char *args[], char *env_args[])
 	{
 		waitpid(pid, &wstatus, 0);
 	}
-	return (0);
+	return (wstatus);
 }

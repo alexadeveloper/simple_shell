@@ -10,15 +10,17 @@ char **build_argv(char *lineptr)
 	char **argv = NULL;
 	char len = 1;
 
-	lineptr = strtok(lineptr, " \n");
+	lineptr = strtok(lineptr, " \t\n");
 	while (lineptr != NULL)
 	{
-		argv = _realloc_pointer(argv, len - 1, len);
+		argv = realloc_pointer(argv, len - 1, len);
 		argv[len - 1] = lineptr;
-		lineptr = strtok(NULL, " \n");
+		lineptr = strtok(NULL, " \t\n");
 		len++;
 	}
-	argv = _realloc_pointer(argv, len - 1, len);
+	argv = realloc_pointer(argv, len - 1, len);
+	if(argv == NULL)
+		return(NULL);
 	argv[len - 1] = NULL;
 	return (argv);
 }
@@ -38,11 +40,15 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 	{
 		if (stat(argv_0, &st) == 0)
 		{
-			*full_path = argv_0;
+			*full_path = str_concat("",argv_0);
 			return (0);
 		}
-		else
+		else{
+			write(STDOUT_FILENO, argv_0, _strlen(argv_0));
+			write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
+
 			return (-1);
+		}
 	}
 	else
 	{
@@ -52,22 +58,31 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 		{
 			path = str_concat(token, "/");
 			if (path == NULL)
-			{ free(aux);
+			{
+				free(aux);
 				printf("ERRRORR en concat\n");
-				return (-1); }
+				return (-1);
+			}
 			*full_path = str_concat(path, argv_0);
 			free(path);
 			if (*full_path == NULL)
-			{ free(aux);
+			{
+				free(aux);
 				printf("ERRRORR en concat\n");
-				return (-1); }
+				return (-1);
+			}
 			if (stat(*full_path, &st) == 0)
-			{ free(aux);
-				return (1); }
+			{
+				free(aux);
+				return (1);
+			}
 			free(*full_path);
 			token = strtok(NULL, s);
 		}
 		free(aux);
+		*full_path = str_concat("","");
+		write(STDOUT_FILENO, argv_0, _strlen(argv_0));
+		write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
 		return (-1);
 	}
 }

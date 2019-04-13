@@ -13,7 +13,7 @@ char *_strcpy(char *dest, char *src)
 		*(dest + cont) = *(src + cont);
 		cont++;
 	} while (*(src + cont - 1) != '\0');
-return (dest);
+	return (dest);
 }
 /**
  * _strlen - Calculate size of string
@@ -25,8 +25,8 @@ int _strlen(char *s)
 	int cont = 0;
 
 	while (*(s + cont) != '\0')
-	cont++;
-return (cont);
+		cont++;
+	return (cont);
 }
 /**
   *str_concat - Duplicate string

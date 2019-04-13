@@ -10,7 +10,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 extern char **environ;
-int myexec(char *exec_path, char *args[], char *env_args[]);
+int myexec(char *line_ptr, char *exec_path, char *args[], char *env_args[]);
 char *str_concat(char *s1, char *s2);
 char *get_value_env(char **envp, char *variable);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);

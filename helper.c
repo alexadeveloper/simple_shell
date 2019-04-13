@@ -5,5 +5,5 @@
  */
 void sighandler(int signum)
 {
-	printf("signal caputed: %d\n", signum);
+	;
 }
