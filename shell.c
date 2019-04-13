@@ -39,14 +39,7 @@ int main(int ac, char *argv[], char *envp[])
 		else if (bytes < 0)
 		{
 			free(lineptr);
-//			write(STDOUT_FILENO, "ctrl +D\n", sizeof("Error\n"));
 			exit(1);
-		}
-		else if (bytes == 0)
-		{
-			write(STDOUT_FILENO, "blah\n", 5);
-			free(lineptr);
-			free(full_path);
 		}
 		if (interactive)
 			write(1, prompt, 12);
