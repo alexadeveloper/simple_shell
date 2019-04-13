@@ -27,12 +27,8 @@ int main(int ac, char *argv[], char *envp[])
 			if (myargv && myargv[0] != NULL)
 			{
 				bytes_path = build_path(&full_path, myargv[0], envp);
-				myexec(full_path, myargv, envp);
-				if (bytes_path > 0)
-				{
-					free(full_path);
-
-				}
+				myexec(lineptr, full_path, myargv, envp);
+				free(full_path);
 			}
 			free(myargv);
 		}

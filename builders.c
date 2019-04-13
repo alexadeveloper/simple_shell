@@ -43,8 +43,12 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 			*full_path = str_concat("",argv_0);
 			return (0);
 		}
-		else
+		else{
+			write(STDOUT_FILENO, argv_0, _strlen(argv_0));
+			write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
+
 			return (-1);
+		}
 	}
 	else
 	{
@@ -76,6 +80,9 @@ int build_path(char **full_path, char *argv_0, char *envp[])
 			token = strtok(NULL, s);
 		}
 		free(aux);
+		*full_path = str_concat("","");
+		write(STDOUT_FILENO, argv_0, _strlen(argv_0));
+		write(STDOUT_FILENO, ": command not found\n", _strlen(": command not found\n"));
 		return (-1);
 	}
 }
