@@ -12,7 +12,7 @@ int main(int ac, char *argv[], char *envp[])
 	char interactive, *prompt = "$jessiFer> ", **myargv;
 	size_t n = 0;
 	ssize_t bytes;
-	int bytes_path;
+	int bytes_path, c_prompt = 1;
 
 	interactive = isatty(STDIN_FILENO);
 	if (interactive)
@@ -26,7 +26,7 @@ int main(int ac, char *argv[], char *envp[])
 			myargv = build_argv(lineptr);
 			if (myargv && myargv[0] != NULL)
 			{
-				bytes_path = build_path(&full_path, myargv[0], envp);
+				bytes_path = build_path(c_prompt, &full_path, myargv[0], envp);
 				myexec(lineptr, full_path, myargv, envp);
 				free(full_path);
 			}
@@ -43,6 +43,7 @@ int main(int ac, char *argv[], char *envp[])
 		lineptr = NULL;
 		myargv = NULL;
 		full_path = NULL;
+		c_prompt++;
 	}
 	return (0);
 }

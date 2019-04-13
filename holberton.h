@@ -22,5 +22,7 @@ ssize_t _getline(char **lineptr, size_t *n, int fd);
 char *_strtok(char *ptr, const char *delim);
 int _strspn(const char *p, const char *s, int opt);
 void sighandler(int);
-int build_path(char **full_path, char *argv_0, char *envp[]);
+int build_path(int c, char **full_path, char *argv_0, char *envp[]);
+void print_number(int number);
+void not_found_command (int count, char *argv_0);
 #endif

@@ -63,3 +63,21 @@ char *str_concat(char *s1, char *s2)
 	p[i] = '\0';
 	return (p);
 }
+/**
+ * print_number - print number in standar output
+ * @number: number to print
+ */
+void print_number(int number)
+{
+	if (number > 9)
+	{
+		print_number(number / 10);
+		print_number(number % 10);
+	}
+	else
+	{
+		char n = number + '0';
+
+		write(STDOUT_FILENO, &n, 1);
+	}
+}
