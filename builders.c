@@ -59,7 +59,6 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 			if (path == NULL)
 			{
 				free(aux);
-				printf("ERRRORR en concat\n");
 				return (-1);
 			}
 			*full_path = str_concat(path, argv_0);
@@ -67,7 +66,6 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 			if (*full_path == NULL)
 			{
 				free(aux);
-				printf("ERRRORR en concat\n");
 				return (-1);
 			}
 			if (stat(*full_path, &st) == 0)

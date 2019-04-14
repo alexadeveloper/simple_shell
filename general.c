@@ -153,6 +153,5 @@ int myexec(char *line_ptr, char *exec_path, char *args[], char *env_args[])
 	{
 		waitpid(pid, &wstatus, 0);
 	}
-	printf("el status es: %d\n", wstatus);
 	return (wstatus);
 }
