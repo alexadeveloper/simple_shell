@@ -47,7 +47,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 		{
 			*full_path = str_concat("", "");
 			not_found_command(c, argv_0);
-			return (-1);
+			return (127);
 		}
 	}
 	else
@@ -80,7 +80,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 		free(aux);
 		*full_path = str_concat("", "");
 		not_found_command(c, argv_0);
-		return (-1);
+		return (127);
 	}
 }
 /**

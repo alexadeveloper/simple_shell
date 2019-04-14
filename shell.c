@@ -20,7 +20,7 @@ int main(int ac, char *argv[], char *envp[])
 	if (interactive)
 	{	write(1, prompt, 12);
 		signal(SIGINT, sighandler);
-		signal(EOF, sighandler); }
+	}
 	while ((bytes = getline(&lineptr, &n, stdin)))
 	{
 		if (bytes > 0)
@@ -33,8 +33,9 @@ int main(int ac, char *argv[], char *envp[])
 					operate.f(myargv, envp, lineptr, bytes_exec);
 				else
 				{
-					build_path(c_prompt, &full_path, myargv[0], envp);
-					bytes_exec = myexec(lineptr, full_path, myargv, envp);
+					bytes_exec = build_path(c_prompt, &full_path, myargv[0], envp);
+					if (bytes_exec != 127)
+						bytes_exec = myexec(lineptr, full_path, myargv, envp);
 					free(full_path);
 				}
 			}
@@ -43,7 +44,7 @@ int main(int ac, char *argv[], char *envp[])
 		else if (bytes < 0)
 		{
 			free(lineptr);
-			exit(1);
+			exit(0);
 		}
 		if (interactive)
 			write(1, prompt, 12);
