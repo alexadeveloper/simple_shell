@@ -6,7 +6,6 @@
 */
 char **build_argv(char *lineptr)
 {
-	/* hacer free cuando no se pueda hacer realloc hacer free */
 	char **argv = NULL;
 	char len = 1;
 
@@ -19,8 +18,8 @@ char **build_argv(char *lineptr)
 		len++;
 	}
 	argv = realloc_pointer(argv, len - 1, len);
-	if(argv == NULL)
-		return(NULL);
+	if (argv == NULL)
+		return (NULL);
 	argv[len - 1] = NULL;
 	return (argv);
 }
@@ -40,11 +39,12 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 	{
 		if (stat(argv_0, &st) == 0)
 		{
-			*full_path = str_concat("",argv_0);
+			*full_path = str_concat("", argv_0);
 			return (0);
 		}
-		else{
-			*full_path = str_concat("","");
+		else
+		{
+			*full_path = str_concat("", "");
 			not_found_command(c, argv_0);
 			return (-1);
 		}
@@ -79,8 +79,52 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 			token = strtok(NULL, s);
 		}
 		free(aux);
-		*full_path = str_concat("","");
+		*full_path = str_concat("", "");
 		not_found_command(c, argv_0);
 		return (-1);
+	}
+}
+/**
+ * getfunction- selects the correct function to perform the operation
+ * @builtin: Operator given
+ *
+ * Return: a pointer to the function that corresponds to the operator given
+ */
+void (*getfunction(char *builtin))(char **argvs, char *line, int status)
+{
+	int i_struct = 0;
+	op_t print[] = {
+		{"exit", exit_handler},
+		{NULL, NULL}
+	};
+
+	while (print[i_struct].op != NULL)
+	{
+		if (_str_cmp(builtin, print[i_struct].op))
+		{
+			return (print[i_struct].f);
+		}
+		i_struct++;
+	}
+	return (NULL);
+}
+/**
+ * exit_handler
+ * @argvs: arguments with exit
+ */
+void exit_handler(char **argvs, char *line, int status)
+{
+	if (argvs[1] == NULL)
+	{
+		free(argvs);
+		free(line);
+		exit(status);
+	}
+	else
+	{
+		status = _atoi(argvs[1]);
+		free(argvs);
+		free(line);
+		exit(status);
 	}
 }
