@@ -1,26 +1,37 @@
 #SIMPLE SHELL 
+
 ##Description
+
 Is a command line interpreter, read it from a terminal or a file.
+
 ***
+
 ##Usage
+
 1. Clone the repository:
 ```console
 https://github.com/alexadeveloper/simple_shell.git
 ```
+
 2. Enter at directory
 ```console
 cd simple_shell/
 ```
+
 3. Compile:
 ```console
 gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 ```
+
 4. Execute:
 ```console
 ./hsh
 ```
+
 ##Functions
+
 The functions used are: 
+
 |Name | Description | Return|
 |:--: | :-- | :--|
 |_strcpy | Copy a string| Destination Pointer|
@@ -37,8 +48,11 @@ The functions used are:
 |_realloc | Reallocates a memory block | Pointer a new allocation|
 |_realloc_pointer | Reallocates memory of a pointer | Pointer a new allocation|
 |main | Entry point of shell |  0 if succes|
+
 ###Files
+
 The functions are organized in files:
+
 Name | Functions
 :--: | :--
 basics.c | _strcpy, _strlen, str_concat
@@ -48,11 +62,15 @@ helper.c | sighandler
 holberton.h | libraries and prototypes
 memory.c | _realloc, _realloc_pointer
 shell.c | main
+
 ###Examples
+
 ```console
 $jessiFer> ls
 basics.c    general.c  holberton.h  memory.c   shell.c
 builders.c  helper.c   hsh          README.md  test
 ```
+
 ###Autors
+
 Ferney Medina & Alexandra Fonseca
