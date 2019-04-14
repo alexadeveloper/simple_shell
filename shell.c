@@ -12,7 +12,9 @@ int main(int ac, char *argv[], char *envp[])
 	char interactive, *prompt = "$jessiFer> ", **myargv;
 	size_t n = 0;
 	ssize_t bytes;
-	int bytes_path, c_prompt = 1;
+	int bytes_exec = 0, c_prompt = 1;
+	op_t operate;
+	(void)ac, (void)argv;
 
 	interactive = isatty(STDIN_FILENO);
 	if (interactive)
@@ -26,8 +28,12 @@ int main(int ac, char *argv[], char *envp[])
 			myargv = build_argv(lineptr);
 			if (myargv && myargv[0] != NULL)
 			{
-				bytes_path = build_path(c_prompt, &full_path, myargv[0], envp);
-				myexec(lineptr, full_path, myargv, envp);
+				operate.f = getfunction(myargv[0]);
+				if (operate.f != NULL)
+					operate.f(myargv, lineptr, bytes_exec);
+				build_path(c_prompt, &full_path, myargv[0], envp);
+				bytes_exec = myexec(lineptr, full_path, myargv, envp);
+				printf("valor de bytes_exec %d\n", bytes_exec);
 				free(full_path);
 			}
 			free(myargv);

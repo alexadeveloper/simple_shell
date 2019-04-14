@@ -5,5 +5,7 @@
  */
 void sighandler(int signum)
 {
+	(void)signum;
+
 	;
 }
