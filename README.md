@@ -1,12 +1,12 @@
-#SIMPLE SHELL 
+# SIMPLE SHELL 
 
-##Description
+## Description
 
 Is a command line interpreter, read it from a terminal or a file.
 
 ***
 
-##Usage
+## Usage
 
 1. Clone the repository:
 ```console
@@ -28,7 +28,7 @@ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 ./hsh
 ```
 
-##Functions
+## Functions
 
 The functions used are: 
 
@@ -49,7 +49,7 @@ The functions used are:
 |_realloc_pointer | Reallocates memory of a pointer | Pointer a new allocation|
 |main | Entry point of shell |  0 if succes|
 
-###Files
+### Files
 
 The functions are organized in files:
 
@@ -63,7 +63,7 @@ holberton.h | libraries and prototypes
 memory.c | _realloc, _realloc_pointer
 shell.c | main
 
-###Examples
+### Examples
 
 ```console
 $jessiFer> ls
@@ -71,6 +71,6 @@ basics.c    general.c  holberton.h  memory.c   shell.c
 builders.c  helper.c   hsh          README.md  test
 ```
 
-###Autors
+### Autors
 
 Ferney Medina & Alexandra Fonseca
