@@ -30,10 +30,13 @@ int main(int ac, char *argv[], char *envp[])
 			{
 				operate.f = getfunction(myargv[0]);
 				if (operate.f != NULL)
-					operate.f(myargv, lineptr, bytes_exec);
-				build_path(c_prompt, &full_path, myargv[0], envp);
-				bytes_exec = myexec(lineptr, full_path, myargv, envp);
-				free(full_path);
+					operate.f(myargv, envp, lineptr, bytes_exec);
+				else
+				{
+					build_path(c_prompt, &full_path, myargv[0], envp);
+					bytes_exec = myexec(lineptr, full_path, myargv, envp);
+					free(full_path);
+				}
 			}
 			free(myargv);
 		}

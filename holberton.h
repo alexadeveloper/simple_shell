@@ -19,7 +19,7 @@ extern char **environ;
 typedef struct op
 {
 	char *op;
-	void (*f)(char **argvs, char *line, int status);
+	void (*f)(char **argvs, char **env, char *line, int status);
 } op_t;
 int myexec(char *line_ptr, char *exec_path, char *args[], char *env_args[]);
 char *str_concat(char *s1, char *s2);
@@ -36,12 +36,13 @@ void sighandler(int);
 int build_path(int c, char **full_path, char *argv_0, char *envp[]);
 void print_number(int number);
 void not_found_command(int count, char *argv_0);
-void exit_handler(char **argvs, char *line, int status);
+void exit_handler(char **argvs, char **env, char *line, int status);
 char _str_cmp(char *str1, char *str2);
-void (*getfunction(char *builtin))(char **argvs, char *line, int status);
+void (*getfunction(char *builtin))(char **argvs, char **env, char *line, int);
 int _atoi(char *s);
 int _is_positive(char *s, int pos);
 int find_pos_num(char *s);
 int my_atoi(char *s, int start, int current, int value, int ispositive);
 int is_digit(char c);
+void env_handler(char **argvs, char **env, char *line, int status);
 #endif

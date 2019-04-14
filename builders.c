@@ -25,6 +25,7 @@ char **build_argv(char *lineptr)
 }
 /**
  *build_path - fin path to execute
+ *@c: quantity of commands executed
  *@full_path: comand to execute
  *@argv_0: the arguments
  *@envp: the enviroment
@@ -85,14 +86,14 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 /**
  * getfunction- selects the correct function to perform the operation
  * @builtin: Operator given
- *
  * Return: a pointer to the function that corresponds to the operator given
  */
-void (*getfunction(char *builtin))(char **argvs, char *line, int status)
+void (*getfunction(char *builtin))(char **argvs, char **env, char *line, int status)
 {
 	int i_struct = 0;
 	op_t print[] = {
 		{"exit", exit_handler},
+		{"env", env_handler},
 		{NULL, NULL}
 	};
 
@@ -105,24 +106,4 @@ void (*getfunction(char *builtin))(char **argvs, char *line, int status)
 		i_struct++;
 	}
 	return (NULL);
-}
-/**
- * exit_handler
- * @argvs: arguments with exit
- */
-void exit_handler(char **argvs, char *line, int status)
-{
-	if (argvs[1] == NULL)
-	{
-		free(argvs);
-		free(line);
-		exit(status);
-	}
-	else
-	{
-		status = _atoi(argvs[1]);
-		free(argvs);
-		free(line);
-		exit(status);
-	}
 }

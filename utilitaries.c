@@ -1,6 +1,7 @@
 #include "holberton.h"
 /**
  *not_found_command - print comand not found
+ *@count: quantity of prompts printed
  *@argv_0: command not found
  */
 void not_found_command(int count, char *argv_0)
