@@ -45,4 +45,5 @@ int find_pos_num(char *s);
 int my_atoi(char *s, int start, int current, int value, int ispositive);
 int is_digit(char c);
 void env_handler(char **argvs, char **env, char *line, int status);
+ssize_t read_file(const char *filename);
 #endif
