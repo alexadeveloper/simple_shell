@@ -55,35 +55,31 @@ void env_handler(char **argvs, char **env, char *line, int status)
 
 void help_handler(char **argvs, char **env, char *line, int status)
 {
-	/* modify build path*/
-	/*
-	 - ok get the var _
-	 - ok find the last /
-	  ok copy all the path until the last /
-	  ok pass copy to read
-	  ok concat /help
-	  ok concat name free
-	   mised buscar con stat
-	   missed manejar errores si no esta el help
-	 ok  free new malloc
-	 */
 	char *p = NULL, *path = NULL, *full_path =  NULL;
+	int index = 0;
+	struct stat st;
 
-		p =get_value_env(env, "_");
-	int index = get_index_last_char(p, '/');
-	printf("%s\n", p);
-	printf("%d\n", index);
+	p =get_value_env(env, "_");
+	index = get_index_last_char(p, '/');
 	p = str_copy_index(p, index - 1);
-	path  = str_concat(p, "help/");
-	printf("%s\n", p);
+	path  = str_concat(p, "/help/");
 	free(p);
 	if (argvs[1])
 		full_path = str_concat(path, argvs[1]);
 	else
+	{
 		full_path = str_concat(path, argvs[0]);
-	printf("%s\n", path);
+	}
+	if (stat(full_path, &st) == 0)
+	{
+		read_file(full_path);
+	}
+	else
+	{
+		free(full_path);
+		full_path = str_concat(path, argvs[0]);
+		read_file(full_path);
+	}
 	free(path);
-	printf("%s\n", full_path);
-	read_file(full_path);
 	free(full_path);
 }

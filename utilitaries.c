@@ -102,7 +102,6 @@ int get_index_last_char(char *string, char find)
 			last_index = index;
 			if (string[index +  1] == '.')
 			{
-				last_index++;
 				break;
 			}
 		}
