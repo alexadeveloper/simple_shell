@@ -1,0 +1,10 @@
+.TH man 1 "April 15 de 2019" "1.0" "shell man page"
+
+.SH NAME
+shell - Command line interpreter, read it from a terminal or a file.
+
+.SH SYPNOSIS
+$command flags
+
+.SH DESCRIPTION
+

@@ -36,7 +36,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 	char *token = NULL, *s = ":", *path = NULL, *aux;
 	struct stat st;
 
-	if (argv_0[0] == '/')
+	if (argv_0[0] == '/' || argv_0[0] == '.')
 	{
 		if (stat(argv_0, &st) == 0)
 		{	*full_path = str_concat("", argv_0);
