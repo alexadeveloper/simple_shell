@@ -19,9 +19,15 @@ void exit_handler(char **argvs, char **env, char *line, int status)
 	else
 	{
 		status = _atoi(argvs[1]);
-		free(argvs);
-		free(line);
-		exit(status);
+		if (status > 0)
+			exit(status);
+		else
+		{
+			write(STDERR_FILENO, argvs[0], _strlen(argvs[0]));
+			write(STDERR_FILENO, ": 1: exit: Illegal number: ", 27);
+			write(STDERR_FILENO, argvs[1], _strlen(argvs[1]));
+			write(STDERR_FILENO, "\n", 1);
+		}
 	}
 }
 /**
