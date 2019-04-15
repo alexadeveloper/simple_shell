@@ -153,5 +153,5 @@ int myexec(char *line_ptr, char *exec_path, char *args[], char *env_args[])
 	{
 		waitpid(pid, &wstatus, 0);
 	}
-	return (WEXITSTATUS(wstatus) & 128);
+	return (WEXITSTATUS(wstatus) & 255);
 }
