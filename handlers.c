@@ -45,3 +45,41 @@ void env_handler(char **argvs, char **env, char *line, int status)
 		iterator++;
 	}
 }
+/**
+ * help_handler - function print hep builds correctly
+ * @argvs: arguments with exit
+ * @env: environment variables
+ * @line: actual line intrduced by user
+ * @status: status previus command
+ */
+
+void help_handler(char **argvs, char **env, char *line, int status)
+{
+	char *p = NULL, *path = NULL, *full_path =  NULL;
+	int index = 0;
+	struct stat st;
+
+	p =get_value_env(env, "_");
+	index = get_index_last_char(p, '/');
+	p = str_copy_index(p, index - 1);
+	path  = str_concat(p, "/help/");
+	free(p);
+	if (argvs[1])
+		full_path = str_concat(path, argvs[1]);
+	else
+	{
+		full_path = str_concat(path, argvs[0]);
+	}
+	if (stat(full_path, &st) == 0)
+	{
+		read_file(full_path);
+	}
+	else
+	{
+		free(full_path);
+		full_path = str_concat(path, argvs[0]);
+		read_file(full_path);
+	}
+	free(path);
+	free(full_path);
+}

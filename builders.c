@@ -83,6 +83,7 @@ void (*getfunction(char *built))(char **, char **, char *, int)
 	op_t print[] = {
 		{"exit", exit_handler},
 		{"env", env_handler},
+		{"help", help_handler},
 		{NULL, NULL}
 	};
 
