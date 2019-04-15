@@ -26,31 +26,36 @@ ssize_t read_file(const char *filename)
 
 	if (filename == NULL)
 		return (0);
-	new = malloc(sizeof(char) * letters);
-	if (new == NULL)
-		return (0);
 	abrir = open(filename, O_RDONLY);
 	if (abrir == -1)
 	{
-		free(new);
 		return (0);
 	}
-	leer = read(abrir, new, letters);
+	new = malloc(sizeof(char) * letters);
+	if (new == NULL)
+		return (0);
+	while ((leer = read(abrir, new, letters)) > 0)
+	{
+		escribir = write(STDOUT_FILENO, new, leer);
+		if (escribir == -1)
+		{
+			free(new);
+			close(abrir);
+			return (0);
+		}
+		free(new);
+		new = malloc(sizeof(char) * letters);
+		if (new == NULL)
+			return (0);
+	}
 	if (leer == -1)
 	{
 		free(new);
 		close(abrir);
 		return (0);
 	}
-	escribir = write(STDOUT_FILENO, new, leer);
-	if (escribir == -1)
-	{
-		free(new);
-		close(abrir);
-		return (0);
-	}
-	close(abrir);
 	free(new);
+	close(abrir);
 	return (escribir);
 }
 /**
