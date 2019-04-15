@@ -38,7 +38,7 @@ void env_handler(char **argvs, char **env, char *line, int status)
 	(void)line;
 	(void)status;
 
-	while(env[iterator])
+	while (env[iterator])
 	{
 		write(STDOUT_FILENO, env[iterator], _strlen(env[iterator]));
 		write(STDOUT_FILENO, "\n", 1);

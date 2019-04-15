@@ -1,4 +1,4 @@
-# SIMPLE SHELL 
+# SIMPLE SHELL
 
 ## Description
 
@@ -30,7 +30,7 @@ gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
 
 ## Functions
 
-The functions used are: 
+The functions used are:
 
 |Name | Description | Return|
 |:--: | :-- | :--|

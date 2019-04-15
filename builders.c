@@ -39,41 +39,30 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 	if (argv_0[0] == '/')
 	{
 		if (stat(argv_0, &st) == 0)
-		{
-			*full_path = str_concat("", argv_0);
+		{	*full_path = str_concat("", argv_0);
 			return (0);
 		}
 		else
-		{
-			*full_path = str_concat("", "");
+		{	*full_path = str_concat("", "");
 			not_found_command(c, argv_0);
-			return (127);
-		}
+			return (127);	}
 	}
 	else
-	{
-		aux = str_concat(get_value_env(envp, "PATH"), "");
+	{	aux = str_concat(get_value_env(envp, "PATH"), "");
 		token = strtok(aux, s);
 		while (token != NULL)
-		{
-			path = str_concat(token, "/");
+		{	path = str_concat(token, "/");
 			if (path == NULL)
-			{
-				free(aux);
-				return (-1);
-			}
+			{	free(aux);
+				return (-1);	}
 			*full_path = str_concat(path, argv_0);
 			free(path);
 			if (*full_path == NULL)
-			{
-				free(aux);
-				return (-1);
-			}
+			{	free(aux);
+				return (-1);	}
 			if (stat(*full_path, &st) == 0)
-			{
-				free(aux);
-				return (1);
-			}
+			{	free(aux);
+				return (1);	}
 			free(*full_path);
 			token = strtok(NULL, s);
 		}
@@ -88,7 +77,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
  * @builtin: Operator given
  * Return: a pointer to the function that corresponds to the operator given
  */
-void (*getfunction(char *builtin))(char **argvs, char **env, char *line, int status)
+void (*getfunction(char *built))(char **, char **, char *, int)
 {
 	int i_struct = 0;
 	op_t print[] = {
@@ -99,7 +88,7 @@ void (*getfunction(char *builtin))(char **argvs, char **env, char *line, int sta
 
 	while (print[i_struct].op != NULL)
 	{
-		if (_str_cmp(builtin, print[i_struct].op))
+		if (_str_cmp(built, print[i_struct].op))
 		{
 			return (print[i_struct].f);
 		}
