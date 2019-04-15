@@ -19,31 +19,24 @@ int main(int ac, char *argv[], char *envp[])
 	interactive = isatty(STDIN_FILENO);
 	if (interactive)
 	{	write(1, prompt, 12);
-		signal(SIGINT, sighandler);
-	}
+		signal(SIGINT, sighandler);	}
 	while ((bytes = getline(&lineptr, &n, stdin)))
 	{
 		if (bytes > 0)
-		{
-			myargv = build_argv(lineptr);
+		{	myargv = build_argv(lineptr);
 			if (myargv && myargv[0] != NULL)
-			{
-				operate.f = getfunction(myargv[0]);
+			{	operate.f = getfunction(myargv[0]);
 				if (operate.f != NULL)
 					operate.f(myargv, envp, lineptr, bytes_exec);
 				else
-				{
-					bytes_exec = build_path(c_prompt, &full_path, myargv[0], envp);
+				{	bytes_exec = build_path(c_prompt, &full_path, myargv[0], envp);
 					if (bytes_exec != 127)
 						bytes_exec = myexec(lineptr, full_path, myargv, envp);
-					free(full_path);
-				}
+					free(full_path);	}
 			}
-			free(myargv);
-		}
+			free(myargv);	}
 		else if (bytes < 0)
-		{
-			free(lineptr);
+		{	free(lineptr);
 			exit(0);
 		}
 		if (interactive)
