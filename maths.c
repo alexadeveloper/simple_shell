@@ -7,7 +7,7 @@
 int _atoi(char *s)
 {
 	int ispositive;
-	int result = 0;
+	int result = -1;
 	int first_pos = 0;
 
 
