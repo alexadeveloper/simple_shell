@@ -94,6 +94,7 @@ void (*getfunction(char *builtin))(char **argvs, char **env, char *line, int sta
 	op_t print[] = {
 		{"exit", exit_handler},
 		{"env", env_handler},
+		{"help", help_handler},
 		{NULL, NULL}
 	};
 

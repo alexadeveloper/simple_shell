@@ -9,6 +9,7 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <signal.h>
+
 extern char **environ;
 /**
  * struct op - Struct op
@@ -46,4 +47,7 @@ int my_atoi(char *s, int start, int current, int value, int ispositive);
 int is_digit(char c);
 void env_handler(char **argvs, char **env, char *line, int status);
 ssize_t read_file(const char *filename);
+void help_handler(char **argvs, char **env, char *line, int status);
+char *str_copy_index(char *original, int index);
+int get_index_last_char(char *string, char find);
 #endif

@@ -54,3 +54,59 @@ ssize_t read_file(const char *filename)
 	free(new);
 	return (escribir);
 }
+/**
+  *str_concat - Duplicate string
+  *@origina: original string
+  *@index: string two
+  * Return: pointer to copy array
+ */
+
+char *str_copy_index(char *original, int index)
+{
+	char *p;
+	unsigned int i;
+	unsigned int size_s1, size_s2;
+
+	if (original == NULL)
+		original = "";
+	for (size_s1 = 0; *(original + size_s1) && original; size_s1++)
+	{
+	}
+	p =  malloc(sizeof(char) * (index + 2));
+	if (p == NULL)
+		return (NULL);
+	for (i = 0; i <= index; i++)
+	{
+		if (i < size_s1)
+			p[i] = *(original + i);
+		else
+			p[i] = '\0';
+	}
+	p[i] = '\0';
+	return (p);
+}
+/**
+ * get_index_last_char
+ * @string: string to evaluate
+ * @find: char to compare
+ * Return: index last char matched -1 if not
+ */
+int get_index_last_char(char *string, char find)
+{
+	int index = 0, last_index = -1;
+
+	while (string[index])
+	{
+		if (string[index] == find)
+		{
+			last_index = index;
+			if (string[index +  1] == '.')
+			{
+				last_index++;
+				break;
+			}
+		}
+		index++;
+	}
+	return (last_index);
+}
