@@ -18,8 +18,7 @@ int main(int ac, char *argv[], char *envp[])
 
 	interactive = isatty(STDIN_FILENO);
 	if (interactive)
-	{	write(1, prompt, 12);
-		signal(SIGINT, sighandler);	}
+		signal(SIGINT, sighandler);
 	while ((bytes = getline(&lineptr, &n, stdin)))
 	{
 		if (bytes > 0)
