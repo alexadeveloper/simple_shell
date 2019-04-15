@@ -58,8 +58,10 @@ void help_handler(char **argvs, char **env, char *line, int status)
 	char *p = NULL, *path = NULL, *full_path =  NULL;
 	int index = 0;
 	struct stat st;
+	(void) line;
+	(void) status;
 
-	p =get_value_env(env, "_");
+	p = get_value_env(env, "_");
 	index = get_index_last_char(p, '/');
 	p = str_copy_index(p, index - 1);
 	path  = str_concat(p, "/help/");

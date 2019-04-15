@@ -74,7 +74,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 }
 /**
  * getfunction- selects the correct function to perform the operation
- * @builtin: Operator given
+ * @built: Operator given
  * Return: a pointer to the function that corresponds to the operator given
  */
 void (*getfunction(char *built))(char **, char **, char *, int)

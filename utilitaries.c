@@ -14,7 +14,6 @@ void not_found_command(int count, char *argv_0)
 /**
   *read_file - Read a file
   *@filename: the name of the file
-  *@letters: cant of letters
   *Return: stdout the content of the file
  */
 ssize_t read_file(const char *filename)
@@ -55,17 +54,17 @@ ssize_t read_file(const char *filename)
 	return (escribir);
 }
 /**
-  *str_concat - Duplicate string
-  *@origina: original string
-  *@index: string two
+  *str_copy_index - Copy from 0 to index
+  *@original: original string
+  *@index: index las position
   * Return: pointer to copy array
  */
 
 char *str_copy_index(char *original, int index)
 {
 	char *p;
-	unsigned int i;
-	unsigned int size_s1, size_s2;
+	int i;
+	int size_s1;
 
 	if (original == NULL)
 		original = "";
@@ -86,7 +85,7 @@ char *str_copy_index(char *original, int index)
 	return (p);
 }
 /**
- * get_index_last_char
+ * get_index_last_char - find last character
  * @string: string to evaluate
  * @find: char to compare
  * Return: index last char matched -1 if not

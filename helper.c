@@ -9,7 +9,7 @@ void sighandler(int signum)
 	(void)signum;
 	int len;
 
-	write(1,"\n",1);
+	write(1, "\n", 1);
 	len = _strlen(prompt);
 	write(1, prompt, len);
 }
