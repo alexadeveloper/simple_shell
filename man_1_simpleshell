@@ -7,4 +7,47 @@ shell - Command line interpreter, read it from a terminal or a file.
 $command flags
 
 .SH DESCRIPTION
+The hsh utility is the standard command interpreter for the system. when it is end, display the output of the commands followed by anew prompt.
+
+.SH PROMPT
+Our prompt is $jessiFer while the prompt is displayed you can type a command.
+
+.SH OPTIONS
+Built-in
+	env - Print the enviroment.
+
+	help - Print the help to the built-ins.
+
+	exit [n] - Terminate the shell process, if n is a negative number or a string prints is a Illegal number.
+
+Commands:
+	Some commands that you can execute
+
+	ls 	: List the files in the directory
+	echo 	: Display the send it in a standard output. 
+
+.SH ENVIROMENT
+
+Examples of Enviroment Variables
+
+	PWD 	: An absolute pathname for the current directory.
+
+.SH FILES
+	basics.c 
+	maths.c - Finctions maths
+	builders.c
+	holberton.h - Prototypes and libraries.
+	shell.c - main 
+
+.SH ALSO
+	builtin(1), write(2), fork(2), malloc(3), open(2), perror(3)
+
+.SH AUTORS
+	Written by Ferney Medina & Alexandra Fonseca
+
+.SH BUGS
+	No discovered yet.
+
+.SH SEE ALSO
+
 
