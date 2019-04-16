@@ -23,7 +23,7 @@ void not_found_path(int count, char *argv_0)
 	print_number_error(count);
 	write(STDERR_FILENO, ": ", 2);
 	write(STDERR_FILENO, argv_0, _strlen(argv_0));
-	write(STDERR_FILENO, ": not found\n", 20);
+	write(STDERR_FILENO, ": not found\n", 12);
 }
 /**
   *read_file - Read a file
