@@ -1,4 +1,9 @@
 help: help [built]
-	Short description of the built.
+    Display information about builtin commands.
+       
+    Options:
+      env - variable enviroment
+      exit -  Terminate the shell process
 
-	Exits the shell with a status of N.  If N is omitted, the exit status is that of the last command executed.
+    Exit Status:
+    Returns success unless option is not found or an invalid option is given.
