@@ -91,6 +91,7 @@ void help_handler(char **argvs, char **env, char *line, int status)
 		full_path = str_concat(path, argvs[0]);
 		read_file(full_path);
 	}
+	write(STDOUT_FILENO, "\n", 1);
 	free(path);
 	free(full_path);
 }
