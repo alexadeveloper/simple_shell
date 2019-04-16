@@ -51,7 +51,7 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 	{	aux = str_concat(get_value_env(envp, "PATH"), "");
 		aux = strtok(aux, " ");
 		if (aux == NULL)
-		{	not_found_command(c, argv_0);
+		{	not_found_path(c, argv_0);
 			return (127);
 		}
 		else
