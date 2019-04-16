@@ -50,4 +50,6 @@ ssize_t read_file(const char *filename);
 void help_handler(char **argvs, char **env, char *line, int status);
 char *str_copy_index(char *original, int index);
 int get_index_last_char(char *string, char find);
+void print_number_error(int number);
+void not_found_path(int count, char *argv_0);
 #endif

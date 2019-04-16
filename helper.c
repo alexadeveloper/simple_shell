@@ -13,3 +13,21 @@ void sighandler(int signum)
 	len = _strlen(prompt);
 	write(1, prompt, len);
 }
+/**
+ * print_number_error - print number in standar output
+ * @number: number to print
+ */
+void print_number_error(int number)
+{
+	if (number > 9)
+	{
+		print_number_error(number / 10);
+		print_number_error(number % 10);
+	}
+	else
+	{
+		char n = number + '0';
+
+		write(STDERR_FILENO, &n, 1);
+	}
+}
