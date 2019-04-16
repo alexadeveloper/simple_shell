@@ -24,7 +24,7 @@ Commands:
 	Some commands that you can execute
 
 	ls 	: List the files in the directory
-	echo 	: Display the send it in a standard output. 
+	echo	: Display the send it in a standard output.
 
 .SH ENVIROMENT
 
@@ -33,11 +33,11 @@ Examples of Enviroment Variables
 	PWD 	: An absolute pathname for the current directory.
 
 .SH FILES
-	basics.c 
+	basics.c
 	maths.c - Finctions maths
 	builders.c
 	holberton.h - Prototypes and libraries.
-	shell.c - main 
+	shell.c - main
 
 .SH ALSO
 	builtin(1), write(2), fork(2), malloc(3), open(2), perror(3)
