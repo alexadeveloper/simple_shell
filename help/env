@@ -1,0 +1,7 @@
+env: 
+	Print the enviroment.
+
+	Some variables in the env are:
+	
+	PATH: the path of current directory
+
