@@ -49,12 +49,15 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 	}
 	else
 	{	aux = str_concat(get_value_env(envp, "PATH"), "");
-		token = strtok(aux, s);
+		aux = strtok(aux, " ");
+		if (aux == NULL)
+		{	not_found_command(c, argv_0);
+			return (127);
+		}
+		else
+		{	token = strtok(aux, s);
 		while (token != NULL)
 		{	path = str_concat(token, "/");
-			if (path == NULL)
-			{	free(aux);
-				return (-1);	}
 			*full_path = str_concat(path, argv_0);
 			free(path);
 			if (*full_path == NULL)
@@ -64,13 +67,11 @@ int build_path(int c, char **full_path, char *argv_0, char *envp[])
 			{	free(aux);
 				return (1);	}
 			free(*full_path);
-			token = strtok(NULL, s);
-		}
+			token = strtok(NULL, s);	}
 		free(aux);
 		*full_path = str_concat("", "");
-		not_found_command(c, argv_0);
-		return (127);
-	}
+		not_found_command(c, argv_0);	}
+		return (127);	}
 }
 /**
  * getfunction- selects the correct function to perform the operation
